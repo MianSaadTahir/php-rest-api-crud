@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /backend/
+
+# If request is a file or directory, serve it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect everything to index.php
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
