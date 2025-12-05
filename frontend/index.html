@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Management</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Product Management</h1>
+
+      <!-- Add Product Form -->
+      <div id="product-form">
+        <h2>Add Product</h2>
+        <input type="text" id="name" placeholder="Name" />
+        <input type="text" id="description" placeholder="Description" />
+        <input type="number" id="price" placeholder="Price" />
+        <input type="text" id="category" placeholder="Category" />
+        <input type="number" id="stock" placeholder="Stock Quantity" />
+        <button id="createBtn">Add Product</button>
+      </div>
+
+      <hr />
+
+      <!-- Product Table -->
+      <h2>All Products</h2>
+      <table id="product-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic rows loaded via jQuery -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+  </body>
+</html>
