@@ -21,13 +21,22 @@ try {
 
 // Parse request URI
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$scriptName = dirname($_SERVER['SCRIPT_NAME']);
-$base = rtrim($scriptName, '/');
-$path = preg_replace('#^' . preg_quote($base) . '#', '', $uri);
+$scriptName = $_SERVER['SCRIPT_NAME'];
+$scriptDir = dirname($scriptName);
+
+// Remove the script directory from URI to get the path
+$path = str_replace($scriptDir, '', $uri);
 $path = '/' . trim($path, '/');
+
+// Handle cases where .htaccess routes /backend/api/* to index.php
+// If URI contains /api, extract everything from /api onwards
+if (preg_match('#(/api/.*)$#', $uri, $matches)) {
+    $path = $matches[1];
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Route handling
+// Route handling - split path into segments
 $segments = array_values(array_filter(explode('/', $path), fn($s) => $s !== ''));
 
 function respond_error($message, $code = 400)

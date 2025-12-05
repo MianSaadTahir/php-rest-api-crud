@@ -1,9 +1,9 @@
 RewriteEngine On
-RewriteBase /backend/
 
-# If request is a file or directory, serve it
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# Serve existing files and directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 
-# Redirect everything to index.php
-RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+# Redirect API requests to backend/index.php
+RewriteRule ^backend/api/(.*)$ backend/index.php [QSA,L]

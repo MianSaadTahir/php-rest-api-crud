@@ -4,7 +4,7 @@
 $db_host = '127.0.0.1';
 $db_name = 'product_management';
 $db_user = 'root';
-$db_pass = 'Saad03342241980-'; // set your password
+$db_pass = ''; // set your password
 
 // PDO DSN
 $dsn = "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4";
