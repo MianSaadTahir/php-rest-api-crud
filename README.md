@@ -1,174 +1,272 @@
-# PHP REST API CRUD Application
+# Product Management System
 
-A simple Product Management System with REST API backend and frontend interface.
+A full-stack web application for managing products and categories. The backend is built with PHP and MySQL providing RESTful APIs, while the frontend is a dynamic interface built with JavaScript, jQuery, and CSS that consumes these APIs.
 
-## Quick Start for XAMPP
+## Table of Contents
 
-### 1. Move Project to XAMPP htdocs
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Technologies Used](#technologies-used)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
 
-**On macOS:**
-```bash
-cp -r "php-rest-api-crud" /Applications/XAMPP/htdocs/
+## Features
+
+- Full CRUD operations for products (Create, Read, Update, Delete)
+- Category management and viewing products by category
+- RESTful API with standardized JSON responses
+- Frontend dynamically consumes APIs using jQuery AJAX
+- Pagination, search, and filter capabilities
+- Real-time product list updates
+- Clean and responsive UI with Bootstrap
+- Input validation and error handling for all operations
+
+## Screenshots
+
+<img src="/assets/1.png" alt="frontend" width="75%">
+<img src="/assets/2.png" alt="postman" width="75%">
+
+## Technologies Used
+
+- PHP
+- MySQL
+- JavaScript
+- jQuery
+- HTML/CSS
+- Bootstrap
+
+## Usage
+
+1. Download and Install XAMPP.
+2. Clone the repository:
+
+   ```bash
+   git clone https://github.com/MianSaadTahir/php-rest-api-crud.git
+   ```
+
+3. Copy the project folder to `C:\xampp\htdocs\` (Windows) or `/Applications/XAMPP/htdocs/` (Mac)
+4. Open XAMPP Control Panel and start Apache & MySQL server.
+
+5. - Go to [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
+   - Go to the "Import" tab
+   - Click "Choose File" and select `database/product_management.sql` from your project folder to import the database schema
+6. Go to [http://localhost/php-rest-api-crud/frontend/](http://localhost/php-rest-api-crud/frontend/]) to view the project
+
+## API Documentation
+
+### Products API
+
+**GET /api/products**
+
+- Description: Retrieve all products.
+- Request: None
+- Response:
+
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "description": "High-performance laptop",
+      "price": "999.99",
+      "category": "Electronics",
+      "stock_quantity": 15,
+      "created_at": "2024-01-15 10:30:00",
+      "updated_at": "2024-01-15 10:30:00"
+    },
+    {
+      "id": 2,
+      "name": "Smartphone",
+      "description": "Latest smartphone model",
+      "price": "699.99",
+      "category": "Electronics",
+      "stock_quantity": 25,
+      "created_at": "2024-01-15 10:31:00",
+      "updated_at": "2024-01-15 10:31:00"
+    }
+  ],
+  "pagination": {
+    "total": 50,
+    "page": 1,
+    "per_page": 10
+  },
+  "message": "Products retrieved successfully"
+}
 ```
 
-**Or manually:**
-- Copy the entire `php-rest-api-crud` folder to `/Applications/XAMPP/htdocs/`
+**GET /api/products/{id}**
 
-### 2. Start XAMPP Services
+- Description: Retrieve a single product by ID.
+- Request: None
+- Response:
 
-1. Open XAMPP Control Panel
-2. Start **Apache** 
-3. Start **MySQL**
-
-### 3. Setup Database
-
-**Option A: Import SQL file (Recommended)**
-1. Open phpMyAdmin: http://localhost/phpmyadmin
-2. Click "Import" tab
-3. Select file: `/Applications/XAMPP/htdocs/php-rest-api-crud/database/product_management.sql`
-4. Click "Go"
-
-**Option B: Create manually**
-1. Create database named `product_management` in phpMyAdmin
-2. Copy and run the SQL from `database/product_management.sql`
-
-### 4. Configure Database (if needed)
-
-Edit `backend/config.php` if your MySQL has a password:
-```php
-$db_pass = 'your_password';
+```json
+{
+  "status": "success",
+  "data": {
+    "id": 1,
+    "name": "Laptop",
+    "description": "High-performance laptop",
+    "price": "999.99",
+    "category": "Electronics",
+    "stock_quantity": 15,
+    "created_at": "2024-01-15 10:30:00",
+    "updated_at": "2024-01-15 10:30:00"
+  },
+  "message": "Product retrieved successfully"
+}
 ```
 
-By default, XAMPP uses:
-- Host: `127.0.0.1`
-- User: `root`  
-- Password: `` (empty)
+**POST /api/products**
 
-### 5. Access the Application
+- Description: Create a new product.
+- Request Body:
 
-**Frontend:**
-```
-http://localhost/php-rest-api-crud/frontend/
-```
-
-**API Endpoint (test):**
-```
-http://localhost/php-rest-api-crud/backend/api/products
+```json
+{
+  "name": "New Product",
+  "description": "Product description",
+  "price": 49.99,
+  "category": "Books",
+  "stock_quantity": 10
+}
 ```
 
-## Project Structure
+- Response:
 
-```
-php-rest-api-crud/
-├── backend/
-│   ├── .htaccess          # URL rewriting rules
-│   ├── config.php         # Database configuration
-│   ├── helpers.php        # Helper functions
-│   └── index.php          # Main API router
-├── database/
-│   └── product_management.sql  # Database schema
-├── frontend/
-│   ├── app.js            # Frontend JavaScript
-│   ├── index.html        # Main HTML page
-│   └── style.css         # Styles
-├── .htaccess            # Root URL rewriting
-└── README.md
-
-```
-
-## API Endpoints
-
-### Products
-
-- `GET /backend/api/products` - Get all products (with pagination, search, filter)
-- `GET /backend/api/products/{id}` - Get single product
-- `POST /backend/api/products` - Create new product
-- `PUT /backend/api/products/{id}` - Update product
-- `DELETE /backend/api/products/{id}` - Delete product
-
-### Query Parameters (GET /products)
-
-- `page` - Page number (default: 1)
-- `per_page` - Items per page (default: 10)
-- `q` - Search query (searches name and description)
-- `category` - Filter by category
-- `sort_by` - Sort field (price, name, category, created_at)
-- `sort_dir` - Sort direction (ASC, DESC)
-
-### Categories
-
-- `GET /backend/api/categories` - Get all categories
-- `GET /backend/api/categories/{id}/products` - Get products by category
-
-## Troubleshooting
-
-### "Database connection failed"
-- ✅ Check if MySQL is running in XAMPP
-- ✅ Verify database `product_management` exists
-- ✅ Check credentials in `backend/config.php`
-
-### "404 Not Found" or routes not working
-- ✅ Enable mod_rewrite in Apache (usually enabled by default)
-- ✅ Verify `.htaccess` files exist
-- ✅ Check Apache error logs: `/Applications/XAMPP/logs/error_log`
-
-### Products not loading in frontend
-- ✅ Open browser DevTools (F12) → Console tab
-- ✅ Check Network tab for failed API requests
-- ✅ Verify API URL in browser console
-
-### CORS Errors
-- ✅ Should be handled automatically by backend headers
-- ✅ Check browser console for specific errors
-
-## Testing the API
-
-### Using Browser
-Open in browser to test GET requests:
-- http://localhost/php-rest-api-crud/backend/api/products
-- http://localhost/php-rest-api-crud/backend/api/categories
-
-### Using cURL
-
-**Get all products:**
-```bash
-curl http://localhost/php-rest-api-crud/backend/api/products
+```json
+{
+  "status": "success",
+  "data": {
+    "id": 3,
+    "name": "New Product",
+    "description": "Product description",
+    "price": "49.99",
+    "category": "Books",
+    "stock_quantity": 10,
+    "created_at": "2024-01-15 11:00:00",
+    "updated_at": "2024-01-15 11:00:00"
+  },
+  "message": "Product created successfully"
+}
 ```
 
-**Create product:**
-```bash
-curl -X POST http://localhost/php-rest-api-crud/backend/api/products \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test Product","price":99.99,"category":"Electronics","stock_quantity":10}'
+**PUT /api/products/{id}**
+
+- Description: Update an existing product by ID.
+- Request Body: (any fields to update)
+
+```json
+{
+  "name": "Updated Product",
+  "price": 59.99,
+  "stock_quantity": 20
+}
 ```
 
-**Update product:**
-```bash
-curl -X PUT http://localhost/php-rest-api-crud/backend/api/products/1 \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Updated Product","price":149.99}'
+- Response:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "id": 3,
+    "name": "Updated Product",
+    "description": "Product description",
+    "price": "59.99",
+    "category": "Books",
+    "stock_quantity": 20,
+    "created_at": "2024-01-15 11:00:00",
+    "updated_at": "2024-01-15 11:15:00"
+  },
+  "message": "Product updated successfully"
+}
 ```
 
-**Delete product:**
-```bash
-curl -X DELETE http://localhost/php-rest-api-crud/backend/api/products/1
+**DELETE /api/products/{id}**
+
+- Description: Delete a product by ID.
+- Request: None
+- Response:
+
+```json
+{
+  "status": "success",
+  "message": "Product deleted successfully"
+}
 ```
 
-## Requirements
+### Categories API
 
-- XAMPP (Apache + MySQL)
-- PHP 7.4+ (included in XAMPP)
-- Modern web browser
+**GET /api/categories**
 
-## Notes
+- Description: Retrieve all categories.
+- Request: None
+- Response:
 
-- CORS is enabled for all origins (change in production)
-- Database uses UTF8MB4 encoding
-- API returns JSON responses
-- Frontend uses jQuery for AJAX requests
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 1,
+      "name": "Electronics",
+      "description": "Electronic devices and accessories"
+    },
+    {
+      "id": 2,
+      "name": "Books",
+      "description": "Various books and publications"
+    },
+    {
+      "id": 3,
+      "name": "Clothing",
+      "description": "Apparel and fashion items"
+    }
+  ],
+  "message": "Categories retrieved"
+}
+```
 
----
+**GET /api/categories/{id}/products**
 
-For detailed setup instructions, see **XAMPP_SETUP.md**
+- Description: Retrieve all products under a specific category by category ID.
+- Request: None
+- Response:
 
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "description": "High-performance laptop",
+      "price": "999.99",
+      "category": "Electronics",
+      "stock_quantity": 15,
+      "created_at": "2024-01-15 10:30:00",
+      "updated_at": "2024-01-15 10:30:00"
+    },
+    {
+      "id": 2,
+      "name": "Smartphone",
+      "description": "Latest smartphone model",
+      "price": "699.99",
+      "category": "Electronics",
+      "stock_quantity": 25,
+      "created_at": "2024-01-15 10:31:00",
+      "updated_at": "2024-01-15 10:31:00"
+    }
+  ],
+  "message": "Products by category retrieved"
+}
+```
 
+## Contributing
+
+Contributions, issues, and feature requests are welcome.
+Feel free to check out the [issues page](https://github.com/MianSaadTahir/php-rest-api-crud/issues) for more information.
