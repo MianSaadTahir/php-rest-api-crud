@@ -269,7 +269,7 @@ A full-stack web application for managing products and categories. The backend i
 ## Contributing
 
 Contributions, issues, and feature requests are welcome.
-Feel free to check out the [issues page](https://github.com/MianSaadTahir/php-rest-api-crud/issues) for more information.
+Feel free to check out the [issues page](https://github.com/MianSaadTahir/php-rest-api-crud/issues).
 
 
 ## License
