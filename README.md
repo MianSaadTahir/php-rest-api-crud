@@ -10,7 +10,7 @@ A full-stack web application for managing products and categories. The backend i
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Contributing](#contributing)
-
+- [License](#license)
 ## Features
 
 - Full CRUD operations for products (Create, Read, Update, Delete)
@@ -270,3 +270,8 @@ A full-stack web application for managing products and categories. The backend i
 
 Contributions, issues, and feature requests are welcome.
 Feel free to check out the [issues page](https://github.com/MianSaadTahir/php-rest-api-crud/issues) for more information.
+
+
+## License
+
+This project is open source and available under the MIT [License](https://github.com/MianSaadTahir/php-rest-api-crud/blob/main/LICENSE).
